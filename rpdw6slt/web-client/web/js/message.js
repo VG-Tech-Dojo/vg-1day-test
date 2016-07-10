@@ -26,10 +26,11 @@ function appendMessage(message) {
     // Bodyをエスケープ
     var escapeBody = $("<div/>").text(message.body).html();
     var escapeDate = $("<div/>").text(message.created_at).html();
+	var escapeUserName = $("<div/>").text(message.user_name).html();
     var messageHTML =
         '<div class="media">' +
             '<div class="media-body">' +
-                //'<span class="media-message-name">名無しさん</span>  ' +
+                '<span class="media-message-name">' + escapeUserName + '</span>  ' +
                 '<span class="media-message-date">' + escapeDate + '</span>' + '<br>' +
                 '<span class="media-message-body">' + escapeBody + '</span>' +
             '</div>' +
@@ -58,14 +59,16 @@ function reloadMessages() {
  * メッセージの投稿
  *
  * @param body
+ * @param name
  */
-function sendMessage(body) {
+function sendMessage(body, name) {
     var success = function() {
         $(".message-body").val("");
+        $(".message-name").val("");
         reloadMessages();
     };
     var error = function() { console.log("error") };
-    (new API()).postMessage(body, success, error);
+    (new API()).postMessage(body, name, success, error);
 }
 
 /**
