@@ -48,6 +48,8 @@
         <h4 class="modal-title" id="postModalLabel">投稿</h4>
       </div>
       <div class="modal-body">
+        名前
+        <p><textarea class="form-control message-name" rows="1"></textarea></p>
         メッセージ
         <p><textarea class="form-control message-body" rows="3"></textarea></p>
       </div>
@@ -120,7 +122,8 @@
   $("#post-message").click(function() {
     $("#postModal").modal("hide");
     var body = $(".message-body").val();
-    sendMessage(body);
+    var name = $(".message-name").val();
+    sendMessage(body, name);
   });
 
   /**
