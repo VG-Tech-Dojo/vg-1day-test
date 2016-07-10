@@ -23,13 +23,13 @@ function appendMessages(data) {
  * @param message
  */
 function appendMessage(message) {
-    // Bodyをエスケープ
     var escapeBody = $("<div/>").text(message.body).html();
+    var escapeDate = $("<div/>").text(moment.unix(message.created_at)).html();
     var messageHTML =
         '<div class="media">' +
             '<div class="media-body">' +
                 //'<span class="media-message-name">名無しさん</span>  ' +
-                //'<span class="media-message-date">' + escapeDate + '</span>' + '<br>' +
+                '<span class="media-message-date">' + escapeDate + '</span>' + '<br>' +
                 '<span class="media-message-body">' + escapeBody + '</span>' +
             '</div>' +
             '<div class="media-right">' +
