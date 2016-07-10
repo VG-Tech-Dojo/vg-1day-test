@@ -102,11 +102,15 @@ func DeleteMessage(c echo.Context) error {
 	var m model.Message
 
 	// 受け取った id を使って model.Message を取得する
-	m.Id, _ = strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
+	if err := m.LoadMessage(id); err != nil {
+		fmt.Fprintf(os.Stderr, "%+v\n", err)
+		return err
+	}
 
 	// メッセージを削除する
 	// ヒント: model.Message.DeleteMessage()
-	if err := m.DeleteMessage(); err != nil {
+	if err := m.DeleteMessage(id); err != nil {
 		fmt.Fprintf(os.Stderr, "%+v\n", err)
 		return err
 	}
