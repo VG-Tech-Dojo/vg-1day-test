@@ -142,14 +142,13 @@ func (m *Message) LoadMessage(id int) error {
 }
 
 // 1-4. データベースからメッセージを削除する
-func (m *Message) DeleteMessage() error {
-	// key を作る
-	// メッセージ id = 1 のメッセージの key は "message-1"
+func (m *Message) DeleteMessage(id int) error {
+	key := fmt.Sprintf("message-%d", id)
 
-	// key を使ってデータベースからメッセージを削除する
-	// ヒント db.Delete()
-
-	if err := deleteMessageId(m.Id); err != nil {
+	if err := db.Delete(key); err != nil {
+		return err
+	}
+	if err := deleteMessageId(id); err != nil {
 		return err
 	}
 
