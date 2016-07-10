@@ -93,7 +93,7 @@ func deleteMessageId(id int) error {
 
 // メッセージをつくる
 // 1-2. ユーザ名を受け取ってメッセージをつくる
-func NewMessage(body string) (*Message, error) {
+func NewMessage(body string, name string) (*Message, error) {
 	id, err := newMessageId()
 	if err != nil {
 		return nil, err
@@ -103,7 +103,7 @@ func NewMessage(body string) (*Message, error) {
 		Id:   id,
 		Body: body,
 		CreatedAt: time.Now().Format("2006-01-02"),
-		Username: "kawachan",
+		Username: name,
 		// 1-1. CreatedAt に時刻をセットする
 		// ヒント: https://golang.org/pkg/time/
 		// 1-2. Username にユーザ名をセットする
