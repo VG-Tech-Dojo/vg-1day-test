@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"sort"
+	"time"
 
 	"github.com/pkg/errors"
 )
@@ -14,8 +15,8 @@ type (
 	Message struct {
 		Id   int    `json:"id"`
 		Body string `json:"body"`
-		// CreatedAt string `json:"created_at"` // 1-1. メッセージの投稿時刻
-		// Username  string `json:"user_name"`  // 1-2. ユーザ名
+		CreatedAt string `json:"created_at"` // 1-1. メッセージの投稿時刻
+		Username  string `json:"user_name"`  // 1-2. ユーザ名
 	}
 	Messages []Message
 )
@@ -92,7 +93,7 @@ func deleteMessageId(id int) error {
 
 // メッセージをつくる
 // 1-2. ユーザ名を受け取ってメッセージをつくる
-func NewMessage(body string) (*Message, error) {
+func NewMessage(body string, user_name string) (*Message, error) {
 	id, err := newMessageId()
 	if err != nil {
 		return nil, err
@@ -102,8 +103,9 @@ func NewMessage(body string) (*Message, error) {
 		Id:   id,
 		Body: body,
 		// 1-1. CreatedAt に時刻をセットする
-		// ヒント: https://golang.org/pkg/time/
+    CreatedAt: time.Now().String(),
 		// 1-2. Username にユーザ名をセットする
+    Username: user_name,
 	}, nil
 }
 
