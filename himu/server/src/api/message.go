@@ -99,9 +99,20 @@ func UpdateMessage(c echo.Context) error {
 func DeleteMessage(c echo.Context) error {
 	// model.Message を用意する
 	// 受け取った id を使って model.Message を取得する
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	var m model.Message
+	if err := m.LoadMessage(id); err != nil {
+		fmt.Fprintf(os.Stderr, "%+v\n", err)
+		return err
+	}
 
 	// メッセージを削除する
 	// ヒント: model.Message.DeleteMessage()
+	if err := m.DeleteMessage(); err != nil {
+		fmt.Fprintf(os.Stderr, "%+v\n", err)
+		return err
+	}
 
 	return c.NoContent(http.StatusOK)
 }
