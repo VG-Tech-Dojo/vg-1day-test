@@ -2,6 +2,7 @@ package model
 
 import (
 	"db"
+	"request"
 
 	"encoding/json"
 	"fmt"
@@ -16,7 +17,7 @@ type (
 		Id   int    `json:"id"`
 		Body string `json:"body"`
 		CreatedAt int `json:"created_at"` // 1-1. メッセージの投稿時刻
-		// Username  string `json:"user_name"`  // 1-2. ユーザ名
+		Username  string `json:"user_name"`  // 1-2. ユーザ名
 	}
 	Messages []Message
 )
@@ -93,7 +94,7 @@ func deleteMessageId(id int) error {
 
 // メッセージをつくる
 // 1-2. ユーザ名を受け取ってメッセージをつくる
-func NewMessage(body string) (*Message, error) {
+func NewMessage(r request.Message) (*Message, error) {
 	id, err := newMessageId()
 	if err != nil {
 		return nil, err
@@ -101,9 +102,9 @@ func NewMessage(body string) (*Message, error) {
 
 	return &Message{
 		Id:   id,
-		Body: body,
+		Body: r.Body,
                 CreatedAt: int(time.Now().Unix()),
-		// 1-2. Username にユーザ名をセットする
+                Username: r.Username,
 	}, nil
 }
 
