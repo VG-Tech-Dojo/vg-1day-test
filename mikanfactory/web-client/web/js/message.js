@@ -29,7 +29,7 @@ function appendMessage(message) {
         '<div class="media">' +
             '<div class="media-body">' +
                 //'<span class="media-message-name">名無しさん</span>  ' +
-                //'<span class="media-message-date">' + escapeDate + '</span>' + '<br>' +
+                '<span class="media-message-date">' + message.created_at + '</span>' + '<br>' +
                 '<span class="media-message-body">' + escapeBody + '</span>' +
             '</div>' +
             '<div class="media-right">' +
