@@ -24,12 +24,14 @@ function appendMessages(data) {
  */
 function appendMessage(message) {
     // Bodyをエスケープ
+    var escapeDate = $("<div/>").text(message.created_at).html();
     var escapeBody = $("<div/>").text(message.body).html();
+    var escapeUserName = $("<div/>").text(message.user_name).html();
     var messageHTML =
         '<div class="media">' +
             '<div class="media-body">' +
-                //'<span class="media-message-name">名無しさん</span>  ' +
-                //'<span class="media-message-date">' + escapeDate + '</span>' + '<br>' +
+                '<span class="media-message-name">'+ escapeUserName +'</span>  ' +
+                '<span class="media-message-date">' + escapeDate + '</span>' + '<br>' +
                 '<span class="media-message-body">' + escapeBody + '</span>' +
             '</div>' +
             '<div class="media-right">' +
@@ -58,13 +60,14 @@ function reloadMessages() {
  *
  * @param body
  */
-function sendMessage(body) {
+function sendMessage(body, user_name) {
     var success = function() {
         $(".message-body").val("");
+        $(".message-user_name").val("");
         reloadMessages();
     };
     var error = function() { console.log("error") };
-    (new API()).postMessage(body, success, error);
+    (new API()).postMessage(body, user_name, success, error);
 }
 
 /**
